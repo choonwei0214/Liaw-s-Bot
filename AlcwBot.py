@@ -6,7 +6,7 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
 @bot.event
 async def on_message(message):
-	if message.content.lower() == "hello":
+	if message.content.lower() == "hello" or message.content.lower() == "hi":
 		await message.channel.send(f"hey {message.author}")
 
 
