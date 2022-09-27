@@ -47,7 +47,8 @@ async def steal(ctx):
 	# The player that kena steal
 	player_to_steal = db_steal.loc[random.randint(0, len(db_steal))]
 	# Amount to steal from the player
-	amt_to_steal = round(random.uniform(0.03, 0.05) * player_to_steal['gold'],2)
+	steal_pwr = db['ID'] == current_player, 'stealing_power']
+	amt_to_steal = round(random.uniform(steal_pwr/100+0.03, steal_pwr/100+0.05) * player_to_steal['gold'],2)
 	
 	# Original amount from the player
 	ori_amt = db.loc[db['ID'] == player_to_steal['ID']]['gold']
@@ -59,6 +60,48 @@ async def steal(ctx):
 	curr_amt = db.loc[db['ID'] == current_player, 'gold']
 	db.loc[db['ID'] == current_player, 'gold'] = curr_amt + amt_to_steal
 	await ctx.channel.send(f"You stole {amt_to_steal} golds from {player_to_steal['name']}!")
+
+@bot.command()
+@commands.cooldown(1, 10800, commands.BucketType.user)
+async def work(ctx):
+	current_player = ctx.message.author.id
+	curr_amt = db.loc[db['ID'] == current_player, 'gold']
+	earned_amt = random.randint(5, 95)
+	db.loc[db['ID'] == current_player, 'gold'] = curr_amt + earned_amt
+	await ctx.channel.send(f"You earned {earned_amt}!")
+
+@bot.command()
+async def upgrade(ctx):
+	current_player = ctx.message.author.id
+	curr_power = db.loc[db['ID'] == current_player, 'stealing_power']
+	if curr_power == 0:
+		if db.loc[db['ID'] == current_player, 'gold'] >= 500:
+			db.loc[db['ID'] == current_player, 'stealing_power'] = curr_power + 5
+			db.loc[db['ID'] == current_player, 'gold'] -= 500
+			await ctx.channel.send(f"Your stealing power is upgraded from {curr_power} to {curr_power+5}!")
+		else:
+			await ctx.channel.send(f"You need 500 golds to upgrade your stealing power!")
+	if curr_power == 5:
+		if db.loc[db['ID'] == current_player, 'gold'] >= 1500:
+			db.loc[db['ID'] == current_player, 'stealing_power'] = curr_power + 5
+			db.loc[db['ID'] == current_player, 'gold'] -= 1500
+			await ctx.channel.send(f"Your stealing power is upgraded from {curr_power} to {curr_power+5}!")
+		else:
+			await ctx.channel.send(f"You need 1500 golds to upgrade your stealing power!")
+	if curr_power == 10:
+		if db.loc[db['ID'] == current_player, 'gold'] >= 2500:
+			db.loc[db['ID'] == current_player, 'stealing_power'] = curr_power + 5
+			db.loc[db['ID'] == current_player, 'gold'] -= 2500
+			await ctx.channel.send(f"Your stealing power is upgraded from {curr_power} to {curr_power+5}!")
+		else:
+			await ctx.channel.send(f"You need 2500 golds to upgrade your stealing power!")
+	if curr_power == 15:
+		if db.loc[db['ID'] == current_player, 'gold'] >= 3500:
+			db.loc[db['ID'] == current_player, 'stealing_power'] = curr_power + 5
+			db.loc[db['ID'] == current_player, 'gold'] -= 3500
+			await ctx.channel.send(f"Your stealing power is upgraded from {curr_power} to {curr_power+5}!")
+		else:
+			await ctx.channel.send(f"You need 3500 golds to upgrade your stealing power!")
 
 @bot.command()
 async def leaderboard(ctx):
