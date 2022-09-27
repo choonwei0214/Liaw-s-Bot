@@ -81,27 +81,29 @@ async def upgrade(ctx):
 			await ctx.channel.send(f"Your stealing power is upgraded from {curr_power} to {curr_power+5}!")
 		else:
 			await ctx.channel.send(f"You need 500 golds to upgrade your stealing power!")
-	if curr_power == 5:
+	elif curr_power == 5:
 		if db.loc[db['ID'] == current_player, 'gold'] >= 1500:
 			db.loc[db['ID'] == current_player, 'stealing_power'] = curr_power + 5
 			db.loc[db['ID'] == current_player, 'gold'] -= 1500
 			await ctx.channel.send(f"Your stealing power is upgraded from {curr_power} to {curr_power+5}!")
 		else:
 			await ctx.channel.send(f"You need 1500 golds to upgrade your stealing power!")
-	if curr_power == 10:
+	elif curr_power == 10:
 		if db.loc[db['ID'] == current_player, 'gold'] >= 2500:
 			db.loc[db['ID'] == current_player, 'stealing_power'] = curr_power + 5
 			db.loc[db['ID'] == current_player, 'gold'] -= 2500
 			await ctx.channel.send(f"Your stealing power is upgraded from {curr_power} to {curr_power+5}!")
 		else:
 			await ctx.channel.send(f"You need 2500 golds to upgrade your stealing power!")
-	if curr_power == 15:
+	elif curr_power == 15:
 		if db.loc[db['ID'] == current_player, 'gold'] >= 3500:
 			db.loc[db['ID'] == current_player, 'stealing_power'] = curr_power + 5
 			db.loc[db['ID'] == current_player, 'gold'] -= 3500
 			await ctx.channel.send(f"Your stealing power is upgraded from {curr_power} to {curr_power+5}!")
 		else:
 			await ctx.channel.send(f"You need 3500 golds to upgrade your stealing power!")
+	else:
+		await ctx.channel.send("Error!")
 
 @bot.command()
 async def leaderboard(ctx):
