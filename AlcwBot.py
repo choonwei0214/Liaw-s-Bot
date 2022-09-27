@@ -13,7 +13,7 @@ bot = commands.Bot(command_prefix="$", intents=intents)
 @bot.event
 async def on_message(message):
 	if message.content.lower() == "hello" or message.content.lower() == "hi":
-		await message.channel.send(f"hey {message.author},{db}")
+		await message.channel.send(f"hey {message.author}!")
 	await bot.process_commands(message)
 
 @bot.command()
