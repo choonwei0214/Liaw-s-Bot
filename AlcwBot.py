@@ -47,7 +47,7 @@ async def steal(ctx):
 	# The player that kena steal
 	player_to_steal = db_steal.loc[random.randint(0, len(db_steal))]
 	# Amount to steal from the player
-	steal_pwr = db['ID'] == current_player, 'stealing_power']
+	steal_pwr = db.loc[db['ID'] == current_player, 'stealing_power']
 	amt_to_steal = round(random.uniform(steal_pwr/100+0.03, steal_pwr/100+0.05) * player_to_steal['gold'],2)
 	
 	# Original amount from the player
