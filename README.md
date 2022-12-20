@@ -1,4 +1,4 @@
 # Liaw-s-Bot
 Discord bot for fun
 
-*Token has reset*
+*Token has been resetted*
